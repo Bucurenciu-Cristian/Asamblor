@@ -10,11 +10,19 @@
 </head>
 <body>
 <div id="root">
-
+    <form method="post" enctype="multipart/form-data">
+        <div>
+            <label for="image_uploads">Choose text files to upload</label>
+            <input type="file" id="image_uploads" name="image_uploads" accept=".asm" multiple>
+        </div>
+        <div class="preview">
+        </div>
+    </form>
 </div>
-<script src="javascript/index.js"></script>
+<script src="index.js"></script>
 </body>
 </html>
+
 
 <?php
 echo <<<EOF
