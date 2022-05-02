@@ -92,10 +92,6 @@ function convertesteNumarul(hex, fill, bazaFrom = 16, bazaTo = 2) {
     return (parseInt(hex, bazaFrom).toString(bazaTo)).padStart(fill, '0');
 }
 
-function zec2bin(zec, fill) {
-    return (parseInt(zec, 10).toString(2)).padStart(fill, '0');
-}
-
 const findOpcode = (biti, valoareInHexa) => {
     const valoareBinara = convertesteNumarul(valoareInHexa, biti)
     console.log(`${valoareInHexa} => ${valoareBinara}`)
