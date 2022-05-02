@@ -1,6 +1,4 @@
-add R0,7
-mov R5,R7
-INC (R2)
-SCC
-BPL
-Sal
+MOV R4,0x1234
+SEV
+MOV R5,R7
+MOV (R9),R3
