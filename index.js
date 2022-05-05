@@ -4,15 +4,15 @@ const input = document.querySelector('input[type="file"]'),
     hexa = document.querySelector('.hexa');
 let create = document.getElementById('create'),
     textbox = document.getElementById('textbox');
-
-const modAdresare = {
+let modAdresare, numeClasa, clase, first, second, third, fourth, B1, B2, B3, B4, keys, values, final, ordineaOctetilor;
+modAdresare = {
     imediat: 0,
     direct: 1,
     indirect: 2,
     indexat: 3,
     dimensiune: 2
-}
-const numeClasa = [{
+};
+numeClasa = [{
     MOV: "0",
     ADD: "1",
     SUB: "2",
@@ -36,7 +36,7 @@ const numeClasa = [{
     CALL: "8C",
     PUSH: "8D",
     POP: "8E",
-},{
+}, {
     BR: "A0",
     BNE: "A1",
     BEQ: "A2",
@@ -46,7 +46,7 @@ const numeClasa = [{
     BCC: "A6",
     BVS: "A7",
     BVC: "A8",
-},{
+}, {
     CLC: "C000",
     CLV: "C001",
     CLZ: "C002",
@@ -67,29 +67,35 @@ const numeClasa = [{
     "PUSH FLAG": "C011",
     "POP FLAG": "C012"
 }];
-
-const clase = [
+clase = [
     {nume: "B1", biti: 4},
     {nume: "B2", biti: 8},
     {nume: "B3", biti: 8},
     {nume: "B4", biti: 16}
 ];
-const B1 = clase[0];
-const B2 = clase[1];
-const B3 = clase[2];
-const B4 = clase[3];
-const keys = {
+[first, second, third, fourth] = clase;
+B1 = first;
+B2 = second;
+B3 = third;
+B4 = fourth;
+keys = {
     [B1.nume]: Object.keys(numeClasa[0]),
     [B2.nume]: Object.keys(numeClasa[1]),
     [B3.nume]: Object.keys(numeClasa[2]),
     [B4.nume]: Object.keys(numeClasa[3]),
-}
-const values = {
+};
+values = {
     [B1.nume]: Object.values(numeClasa[0]),
     [B2.nume]: Object.values(numeClasa[1]),
     [B3.nume]: Object.values(numeClasa[2]),
     [B4.nume]: Object.values(numeClasa[3]),
-}
+};
+final = [];
+const littleEndian = "littleEndian";
+const bigEndian = "bigEndian";
+ordineaOctetilor = {littleEndian, bigEndian}
+const decizieOrdine = ordineaOctetilor.littleEndian
+console.error(ordineaOctetilor)
 
 function convertesteNumarul(hex, fill, bazaFrom = 16, bazaTo = 2) {
     return (parseInt(hex, bazaFrom).toString(bazaTo)).padStart(fill, '0');
@@ -172,21 +178,16 @@ const gasesteAdresarea = (input) => {
     console.info(valoareaRegistrului, findAdresare, theThird)
     return [valoareaRegistrului, findAdresare, theThird];
 }
-
-// [a, b] = gasesteAdresarea("R0"); //Directa
-// console.log(a, b)
-
-// const input1 = "( R 2 )";
-// let [c, d] = gasesteAdresarea(input1); //Indirecta
-// console.log(input1, c, d)
-
-let [e, f, z] = gasesteAdresarea("124(R5)");
-console.log(e, f, z)
-
-// const input2 = "12 4 ( R 5)";
-// let [g, h,i] = gasesteAdresarea(input2); //Indexata
-// console.log(input2, g, h,i)
 let theStiva = [];
+const creeazaUnElement = (input) => {
+    return document.createElement(input);
+}
+const adaugaCopilLaElement = (element, copil) => {
+    element.appendChild(copil)
+}
+const adaugaLaElementulCurent = (element, continut) => {
+    element.innerHTML += continut;
+}
 const citesteFisier = (e) => {
     const reader = new FileReader();
     reader.readAsText(input.files[0]);
@@ -259,36 +260,40 @@ const citesteFisier = (e) => {
                     opcode = NaN;
                     console.log("Out of this world :)");
             }
-            if (valoareRegistru !== undefined) {
-
-            }
-            let div = document.createElement('div');
-            preview.appendChild(div);
-            div.innerHTML += item;
-            let bin = document.createElement('div');
-            binary.appendChild(bin);
-            bin.innerHTML += tot;
-            if (valoareRegistru !== undefined) {
-                bin.innerHTML += "\t";
-                bin.innerHTML += valoareRegistru;
-            }
-            let hexaDiv = document.createElement('div');
-            hexa.appendChild(hexaDiv);
+            let div = creeazaUnElement('div');
+            let bin = creeazaUnElement('div');
+            let hexaDiv = creeazaUnElement('div');
             let totInBinar = convertesteNumarul(tot, 4, 2, 16)
-            hexa.innerHTML += totInBinar + "\t";
-
+            adaugaCopilLaElement(preview, div)
+            adaugaLaElementulCurent(div, item);
+            adaugaCopilLaElement(binary, bin)
+            adaugaLaElementulCurent(bin, tot);
+            adaugaCopilLaElement(hexa, hexaDiv)
+            adaugaLaElementulCurent(hexa, totInBinar)
+            if (valoareRegistru !== undefined) {
+                bin.innerHTML += "\n";
+                adaugaLaElementulCurent(bin, valoareRegistru)
+            }
+            final = [];
+            const secventa1_2 = totInBinar.slice(0, 2);
+            const secventa3_4 = totInBinar.slice(2);
+            let partial = [];
+            console.info(typeof partial)
+            let boolean = decizieOrdine === ordineaOctetilor.littleEndian
+            partial = boolean ? [secventa3_4, secventa1_2] : [secventa1_2, secventa3_4];
+            console.info(typeof partial)
             if (valoareRegistru !== undefined) {
                 let valoareRegistruInBinar = convertesteNumarul(valoareRegistru, 4, 2, 16);
-                hexa.innerHTML += valoareRegistruInBinar;
-                theStiva.push([totInBinar.slice(2), totInBinar.slice(0, 2), valoareRegistruInBinar.slice(2), valoareRegistruInBinar.slice(0, 2)])
-            } else {
-                theStiva.push([totInBinar.slice(2), totInBinar.slice(0, 2)])
+                const secventa5_6 = valoareRegistruInBinar.slice(0, 2);
+                const secventa7_8 = valoareRegistruInBinar.slice(2);
+                boolean ? partial.push(secventa7_8, secventa5_6) : partial.push(secventa5_6, secventa7_8);
+                adaugaLaElementulCurent(hexa, valoareRegistruInBinar)
             }
-
+            console.info(typeof partial)
+            theStiva.push(partial.join(" "));
         }
-        theStiva = theStiva.flat().join(" ")
+        theStiva = theStiva.join("\n");
         textbox.value = theStiva;
-
     };
 }
 input.addEventListener('change', citesteFisier, false);
@@ -323,38 +328,3 @@ input.addEventListener('change', citesteFisier, false);
 
     }, false);
 })();
-
-
-function updateImageDisplay() {
-    while (preview.firstChild) {
-        preview.removeChild(preview.firstChild);
-    }
-
-    const curFiles = input.files;
-    if (curFiles.length === 0) {
-        const para = document.createElement('p');
-        para.textContent = 'No files currently selected for upload';
-        preview.appendChild(para);
-    } else {
-        const list = document.createElement('ol');
-        preview.appendChild(list);
-
-        for (const file of curFiles) {
-            const listItem = document.createElement('li');
-            const para = document.createElement('p');
-            if (validFileType(file)) {
-                para.textContent = `File name ${file.name}, file size ${returnFileSize(file.size)}.`;
-                const image = document.createElement('img');
-                image.src = URL.createObjectURL(file);
-
-                listItem.appendChild(image);
-                listItem.appendChild(para);
-            } else {
-                para.textContent = `File name ${file.name}: Not a valid file type. Update your selection.`;
-                listItem.appendChild(para);
-            }
-
-            list.appendChild(listItem);
-        }
-    }
-}
