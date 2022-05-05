@@ -16,7 +16,7 @@
             <label for="image_uploads">Choose text files to upload</label>
             <input type="file" id="image_uploads" name="image_uploads" accept=".asm" multiple>
         </div>
-        <div class="d-flex justify-content-around">
+        <div class="d-flex justify-content-around" style="width: 600px;">
             <div class="preview">
                 <div>Instructiunea</div>
             </div>
@@ -29,13 +29,14 @@
             </div>
         </div>
     </form>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <textarea id="textbox">Type something here</textarea> <button id="create">Create file</button>
 </div>
 <script src="index.js"></script>
 </body>
 </html>
-
-
-<?php
-echo <<<EOF
-<h1>EveryThing works</h1>
-EOF;

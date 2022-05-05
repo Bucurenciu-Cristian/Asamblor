@@ -1,7 +1,10 @@
-const input = document.querySelector('input[type="file"]');
-const preview = document.querySelector('.preview');
-const binary = document.querySelector('.binary');
-const hexa = document.querySelector('.hexa');
+const input = document.querySelector('input[type="file"]'),
+    preview = document.querySelector('.preview'),
+    binary = document.querySelector('.binary'),
+    hexa = document.querySelector('.hexa');
+let create = document.getElementById('create'),
+    textbox = document.getElementById('textbox');
+
 const modAdresare = {
     imediat: 0,
     direct: 1,
@@ -114,9 +117,12 @@ const zecimalSauHexaPe16Biti = (intrare) => {
     }
     return intoarce;
 }
+const eliminaSpatiulGol = (input) => {
+    return input.replace(/\s+/g, '')
+}
 const gasesteAdresarea = (input) => {
     input = input.toUpperCase()
-    input = input.replace(/\s+/g, '')
+    input = eliminaSpatiulGol(input);
     console.warn({input});
     let R = "R";
     let parDesc = "(";
@@ -174,7 +180,7 @@ const gasesteAdresarea = (input) => {
 // let [c, d] = gasesteAdresarea(input1); //Indirecta
 // console.log(input1, c, d)
 
-let [e, f, z] = gasesteAdresarea("1124(R5)");
+let [e, f, z] = gasesteAdresarea("124(R5)");
 console.log(e, f, z)
 
 // const input2 = "12 4 ( R 5)";
@@ -194,9 +200,8 @@ const citesteFisier = (e) => {
             } else if (pozitieHashtag === 0) {
                 continue;
             }
-            const spargeLinia = item.split(" ");
+            let spargeLinia = item.split(" ");
             const currentInstr = spargeLinia[0].toUpperCase();
-
             let registri = "Default";
             let test = gresit;
             let indexDinKeys = 0;
@@ -215,6 +220,7 @@ const citesteFisier = (e) => {
                 //Clasa B1
                 case B1.nume:
                     opcode = findOpcode(B1.biti, indexDinValues)
+                    spargeLinia[1] = spargeLinia.slice(1).join("");
                     registri = spargeLinia[1].split(",");
                     if (registri.length < 2) {
                         break;
@@ -236,6 +242,7 @@ const citesteFisier = (e) => {
                     break;
                 //Clasa B3
                 case B3.nume:
+                    //Todo aici mai ai de implementat deoarece nu intelegi bine aceste instructiuni.
                     opcode = findOpcode(B3.biti, indexDinValues)
                     tot = opcode
                     break;
@@ -269,22 +276,53 @@ const citesteFisier = (e) => {
             hexa.appendChild(hexaDiv);
             let totInBinar = convertesteNumarul(tot, 4, 2, 16)
             hexa.innerHTML += totInBinar + "\t";
-            console.table(theStiva);
-
 
             if (valoareRegistru !== undefined) {
-                let valoareRegistruInBinar = convertesteNumarul(valoareRegistru,2,2,16);
+                let valoareRegistruInBinar = convertesteNumarul(valoareRegistru, 4, 2, 16);
                 hexa.innerHTML += valoareRegistruInBinar;
-                console.error(valoareRegistruInBinar);
-                theStiva.push([totInBinar.slice(2),totInBinar.slice(0,2),valoareRegistruInBinar.slice(2),valoareRegistruInBinar.slice(0,2)])
-            }else{
-                theStiva.push([totInBinar.slice(2),totInBinar.slice(0,2)])
+                theStiva.push([totInBinar.slice(2), totInBinar.slice(0, 2), valoareRegistruInBinar.slice(2), valoareRegistruInBinar.slice(0, 2)])
+            } else {
+                theStiva.push([totInBinar.slice(2), totInBinar.slice(0, 2)])
             }
 
         }
+        theStiva = theStiva.flat().join(" ")
+        textbox.value = theStiva;
+
     };
 }
 input.addEventListener('change', citesteFisier, false);
+
+(function () {
+    var textFile = null,
+        makeTextFile = function (text) {
+            var data = new Blob([text], {type: 'text/plain'});
+
+            // If we are replacing a previously generated file we need to
+            // manually revoke the object URL to avoid memory leaks.
+            if (textFile !== null) {
+                window.URL.revokeObjectURL(textFile);
+            }
+
+            textFile = window.URL.createObjectURL(data);
+
+            return textFile;
+        };
+    create.addEventListener('click', function () {
+        var link = document.createElement('a');
+        link.setAttribute('download', 'info.bin');
+        link.href = makeTextFile(textbox.value);
+        document.body.appendChild(link);
+
+        // wait for the link to be added to the document
+        window.requestAnimationFrame(function () {
+            var event = new MouseEvent('click');
+            link.dispatchEvent(event);
+            document.body.removeChild(link);
+        });
+
+    }, false);
+})();
 
 
 function updateImageDisplay() {
