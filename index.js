@@ -6,127 +6,11 @@ let create = document.getElementById('create'),
     pascupas = document.getElementById('pascupas')
 totul = document.getElementById('totul')
 textbox = document.getElementById('textbox');
-let MPM = [0x60184D003,
-    0x00000190A,
-    0x000014804,
-    0x000010804,
-    0x301830000,
-    0x1019C8000,
-    0x301800000,
-    0x6019C0000,
-    0x701980000,
-    0x901634800,
-    0x000000A0E,
-    0x000000B19,
-    0x000000E38,
-    0x000000E5A,
-    0x201500B14,
-    0x60188C000,
-    0x201880813,
-    0x60188C000,
-    0x283880000,
-    0x901500B14,
-    0x022900C1E,
-    0x000000802,
-    0x022880C1E,
-    0x05288C000,
-    0x923880C1E,
-    0x022900D25,
-    0x000000802,
-    0x022880C1E,
-    0x05288C000,
-    0x923880D25,
-    0x401900B34,
-    0x483918B34,
-    0x58391CB34,
-    0x58301CF00,
-    0x485920B34,
-    0x486900B34,
-    0x487920B34,
-    0x0B2920B34,
-    0x092920B34,
-    0xB8391CB34,
-    0xC85918B34,
-    0x088918B34,
-    0x089918B34,
-    0x08A920B34,
-    0x09B920B34,
-    0x08C920B34,
-    0x08D920B34,
-    0x08E920B34,
-    0x3018C8F00,
-    0x801500000,
-    0x301880000,
-    0x401804B34,
-    0x901300F00,
-    0x000000802,
-    0x0000C0F00,
-    0x0000C0F00,
-    0x000002B54,
-    0x000000F00,
-    0x000002BD4,
-    0x000000F00,
-    0x000003354,
-    0x000000F00,
-    0x0000033D4,
-    0x000000F00,
-    0x000002354,
-    0x000000F00,
-    0x000002354,
-    0x000000F00,
-    0x000003B54,
-    0x000000F00,
-    0x000003BD4,
-    0x000000F00,
-    0x000000B54,
-    0x000000000,
-    0x000000B4B,
-    0x000000802,
-    0x60188C850,
-    0x022500851,
-    0x60188C000,
-    0x923500851,
-    0x953500000,
-    0x301808000,
-    0x6019C0000,
-    0x401600F00,
-    0x000000802,
-    0x60188C859,
-    0x022600F00,
-    0x60188C000,
-    0x923600F00,
-    0x953600F00,
-    0x1A5100F00,
-    0x000000000,
-    0x1A6100F00,
-    0x000000000,
-    0x000000F00,
-    0x000000000,
-    0x00002C000,
-    0x000000000,
-    0x000024F00,
-    0x000000000,
-    0x000028800,
-    0x000000000,
-    0x301808000,
-    0x6019C0F00,
-    0x301880000,
-    0x901604F00,
-    0x301808000,
-    0x1019C0F00,
-    0x301880000,
-    0x901104F00,
-    0x301880000,
-    0x901604F00,
-    0x301880000,
-    0x901604000,
-    0x301880000,
-    0x901104F00,
-]
+
 let modAdresare, numeClasa, clase, first, second, third, fourth, B1, B2, B3, B4, keys, values, final, ordineaOctetilor;
 modAdresare = {
-    imediat: 0,
-    direct: 1,
+    imediat: 1,
+    direct: 0,
     indirect: 2,
     indexat: 3,
     dimensiune: 2
@@ -413,10 +297,10 @@ const citesteFisier = (e) => {
                     adaugaLaElementulCurent(hexa, valoareRegistruInBinar)
                 }
             }
-            Memorie.push(partial);
+            //Reminder: Memorie.push(partial);
             theStiva.push(partial.join(" "));
         }
-        console.error(Memorie);
+        //Reminder: console.error(Memorie);
         theStiva = theStiva.join(" ");
         textbox.value = theStiva;
     };
@@ -555,14 +439,14 @@ let microInstructiuni = [
     ],
     //INDEX
     [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
+        "000",
+        "001",
+        "010",
+        "011",
+        "100",
+        "101",
+        "110",
+        "111",
     ],
     //`T/F
     [
@@ -573,7 +457,7 @@ let microInstructiuni = [
 let [SBUS_All, DBUS_All, ALU_All, RBUS_All, OP_MEM_ALL, ALTE_OP_All, SUCCESOR_All, INDEX_All, trueNegatpeFalse_All] = microInstructiuni
 OP_MEM_ALL = OP_MEM_ALL.map(item => item.split("").slice(2).join(""))
 SUCCESOR_All = SUCCESOR_All.map(item => item.split("").slice(1).join(""))
-// INDEX_All = INDEX_All.map(item => item.split("").slice(1).join(""))
+INDEX_All = INDEX_All.map(item => item.split("").slice(0).join(""))
 trueNegatpeFalse_All = trueNegatpeFalse_All.map(item => item.split("").slice(3).join(""))
 let microInBinar = [];
 for (const x of microInstructiuni) {
@@ -584,53 +468,181 @@ const RG = new Array(16).fill(0);
 const getRG = (input) => {
     return RG[input - 1];
 }
-let Memorie = []
+let Memorie = [0x02,0x04,0x05,0x00,0x81,0x00];
 
-let MAR = 0;
+//Registre pentru program principal
+//Memoriea principala declarata mai sus(cea rezultata din fisierul de intrare .asm)
+let IR = 0;
+let PC = 0;
 let T = 0;
-let MIR = MPM[MAR];
-let MIRDemo = 0x60184D003;
 let SP = 0;
-let PC;
-
-//Aici trebuie sa vina in binar.
-let IR;
-let MDR;
-let ADR;
+let MDR = 0;
+let ADR = 0;
 let IVR = 0;
+//registrele generale(cele 16)
+
+//Registre necesare pentru uProgram
+let MIR = 0;
+let MAR = 0;
+let MPM = [0x60184D003,
+    0x00000198A,//Reminder: 190A
+    0x000014804,
+    0x000010804,
+    0x301830000,
+    0x1019C8000,
+    0x301800000,
+    0x6019C0000,
+    0x701980000,
+    0x901634800,
+    0x000000A0E,
+    0x000000B19,
+    0x000000E38,
+    0x000000E5A,
+    0x201500B14,
+    0x60188C813,//0x60188C000
+    0x201880813,
+    0x60188C000,
+    0x283880000,
+    0x901500B14,
+    0x022900C1E,
+    0x000000802,
+    0x022880C1E,
+    0x05288C000,
+    0x923880C1E,
+    0x022900D25,
+    0x000000802,
+    0x022880C1E,
+    0x05288C000,
+    0x923880D25,
+    0x401000B34,//0x401900B34,
+    0x483918B34,
+    0x58391CB34,
+    0x58301CF00,
+    0x485920B34,
+    0x486900B34,
+    0x487920B34,
+    0x0B2920B34,
+    0x092920B34,
+    0xB8391CB34,
+    0xC85918B34,
+    0x088918B34,
+    0x089918B34,
+    0x08A920B34,
+    0x09B920B34,
+    0x08C920B34,
+    0x08D920B34,
+    0x08E920B34,
+    0x3018C8F00,
+    0x801500000,
+    0x301880000,
+    0x401804B34,
+    0x901300F00,
+    0x000000802,
+    0x0000C0F00,
+    0x0000C0F00,
+    0x000002B54,
+    0x000000F00,
+    0x000002BD4,
+    0x000000F00,
+    0x000003354,
+    0x000000F00,
+    0x0000033D4,
+    0x000000F00,
+    0x000002354,
+    0x000000F00,
+    0x000002354,
+    0x000000F00,
+    0x000003B54,
+    0x000000F00,
+    0x000003BD4,
+    0x000000F00,
+    0x000000B54,
+    0x000000000,
+    0x000000B4B,
+    0x000000802,
+    0x60188C850,
+    0x022500851,
+    0x60188C000,
+    0x923500851,
+    0x953500000,
+    0x301808000,
+    0x6019C0000,
+    0x401600F00,
+    0x000000802,
+    0x60188C859,
+    0x022600F00,
+    0x60188C000,
+    0x923600F00,
+    0x953600F00,
+    0x1A5100F00,
+    0x000000000,
+    0x1A6100F00,
+    0x000000000,
+    0x000000F00,
+    0x000000000,
+    0x00002C000,
+    0x000000000,
+    0x000024F00,
+    0x000000000,
+    0x000028800,
+    0x000000000,
+    0x301808000,
+    0x6019C0F00,
+    0x301880000,
+    0x901604F00,
+    0x301808000,
+    0x1019C0F00,
+    0x301880000,
+    0x901104F00,
+    0x301880000,
+    0x901604F00,
+    0x301880000,
+    0x901604000,
+    0x301880000,
+    0x901104F00,
+]
+let MIRDemo = 0x60184D003;
+
+//Stari
+let C = 0;
 let Z = 0;
 let S = 0;
-let C = 0;
 let V = 0;
-let uADR;
-let Index;
+let Cin = 0;
+let uADR = 0;
+let Index = 0;
+let INTR = 0;
+let INTA = 0;
+let BVI = 0;
+let BI = 0;
+let BE = 0;
+let BE0 = 0;
+let BE1 = 0;
+let BP0 = 0;
+let ACLOW = 0;
+let CIL = 0;
+let Flags = 0;
+let g = 0;
 
-let Conda;
-let Condi;
-let BI;
-let BE0;
-let BE1;
-let BVI;
-let INTA;
-let BP0;
-let BE;
-let ACLOW;
-let CIL;
+//Magistrale
+let SBUS = 0;
+let DBUS = 0;
+let RBUS = 0;
+let ALU = 0;
+
 let altaVariabilaGlobala = 0;
 let stare = 0;
-let SBUS;
-let DBUS;
-let ALU;
-let RBUS;
-let Flags;
-let g;
+
+let hexString;
+let instructiunePartiala;
+let test;
+
 const Get_CL0 = (instrReg) => {
     return (((instrReg & 0x8000) >> 15) & (~((instrReg & 0x2000) >> 13)));
 }
 const Get_CL1 = (instrReg) => {
     return (((instrReg & 0x8000) >> 15) & ((instrReg & 0x4000) >> 14));
 }
-
 const setSbus = (SBUS_codification) => {
     switch (SBUS_codification) {
         case SBUS_All[0]:
@@ -695,7 +707,8 @@ const setDbus = (DBUS_codification) => {
             return -1;
     }
 }
-const setAlu = (ALU_codification) => {
+const executeALU = (ALU_codification) => {
+    let rezultat;
     switch (ALU_codification) {
         case ALU_All[0]:
             return 0;
@@ -704,7 +717,31 @@ const setAlu = (ALU_codification) => {
         case ALU_All[2]:
             return DBUS;
         case ALU_All[3]:
-            let rezultat = DBUS + SBUS;
+            rezultat = DBUS + SBUS;
+            if (rezultat === 0) {
+                Z = 1;
+            } else {
+                Z = 0;
+            }
+            if (rezultat < 0) {
+                S = 1;
+            } else {
+                S = 0;
+            }
+            if (((rezultat & 0x00010000) >> 16 == 1) && ((rezultat & 0x0000FFFF) < 0x0000FFFF)) {
+                C = 1;
+            } else {
+                C = 0;
+            }
+            if (((rezultat & 0xFFFF0000) >> 16 > 0) && ((rezultat & 0x0000FFFF) == 0x0000FFFF)) {
+                V = 1;
+            } else {
+                V = 0;
+            }
+            Flags = (C << 3) | (V << 2) | (Z << 1) | (S << 0);
+            return rezultat;
+        case ALU_All[4]:
+            rezultat = DBUS - SBUS;
             if (rezultat === 0) {
                 Z = 1;
             } else {
@@ -725,93 +762,68 @@ const setAlu = (ALU_codification) => {
             } else {
                 V = 0;
             }
-            Flags = (Flags & 0) | ((C << 3) | (V << 2) | (Z << 1) | (S << 0));
+            Flags = (C << 3) | (V << 2) | (Z << 1) | (S << 0);
             return rezultat;
-        case ALU_All[4]:
-            let rezultat1 = DBUS - SBUS;
-            if (rezultat1 === 0) {
-                Z = 1;
-            } else {
-                Z = 0;
-            }
-            if (rezultat1 < 0) {
-                S = 1;
-            } else {
-                S = 0;
-            }
-            if (((rezultat1 & 0x00010000) >> 16 == 1) && (rezultat1 & 0x0000FFFF) < 0x0000FFFF) {
-                C = 1;
-            } else {
-                C = 0;
-            }
-            if (((rezultat1 & 0xFFFF0000) >> 16 > 0) && (rezultat1 & 0x0000FFFF) == 0x0000FFFF) {
-                V = 1;
-            } else {
-                V = 0;
-            }
-            Flags = (Flags & 0) | ((C << 3) | (V << 2) | (Z << 1) | (S << 0));
-            return rezultat1;
         case ALU_All[5]:
-            let rezultat2 = SBUS & DBUS;
-            if (rezultat2 === 0) {
+            rezultat = SBUS & DBUS;
+            if (rezultat === 0) {
                 Z = 1;
             } else {
                 Z = 0;
             }
-            if (rezultat2 < 0) {
+            if (rezultat < 0) {
                 S = 1;
             } else {
                 S = 0;
             }
-            Flags = (Flags & 0) | ((C << 3) | (V << 2) | (Z << 1) | (S << 0));
-            return rezultat2;
+            Flags = (C << 3) | (V << 2) | (Z << 1) | (S << 0);
+            return rezultat;
         case ALU_All[6]:
-            let rezultat3 = SBUS | DBUS;
-            if (rezultat3 === 0) {
+            rezultat = SBUS | DBUS;
+            if (rezultat === 0) {
                 Z = 1;
             } else {
                 Z = 0;
             }
-            if (rezultat3 < 0) {
+            if (rezultat < 0) {
                 S = 1;
             } else {
                 S = 0;
             }
-            Flags = (Flags & 0) | ((C << 3) | (V << 2) | (Z << 1) | (S << 0));
-            return rezultat3;
-
+            Flags = (C << 3) | (V << 2) | (Z << 1) | (S << 0);
+            return rezultat;
         case ALU_All[7]:
-            let rezultat4 = SBUS ^ DBUS;
-            if (rezultat4 === 0) {
+            rezultat = SBUS ^ DBUS;
+            if (rezultat === 0) {
                 Z = 1;
             } else {
                 Z = 0;
             }
-            if (rezultat4 < 0) {
+            if (rezultat < 0) {
                 S = 1;
             } else {
                 S = 0;
             }
-            Flags = (Flags & 0) | ((C << 3) | (V << 2) | (Z << 1) | (S << 0));
-            return rezultat4;
+            Flags = (C << 3) | (V << 2) | (Z << 1) | (S << 0);
+            return rezultat;
 
     }
 }
 const setRbus = (RBUS_codification) => {
     switch (RBUS_codification) {
         case RBUS_All[0]:
-            return 0;
+            break;
         case RBUS_All[1]:
             Flags = RBUS;
             break;
         case RBUS_All[2]:
-            Flags = RBUS & 0x0F
+            Flags = RBUS & 0x0F;
             break;
         case RBUS_All[3]:
-            RG[(IR & 0x0F)] = RBUS
+            RG[(IR & 0x0F)] = RBUS;
             break;
         case RBUS_All[4]:
-            SP = SBUS;
+            SP = RBUS;
             break;
         case RBUS_All[5]:
             T = RBUS;
@@ -835,13 +847,15 @@ const setOpMem = (OpMem_codification) => {
         case OP_MEM_ALL[0]:
             return 0;
         case OP_MEM_ALL[1]://IFCH
-            IR = Memorie[ADR];
+            IR = (Memorie[ADR+1]<<8) | Memorie[ADR];//Reminder trebuie sa luam si ADR + 1 (cum?)
+            console.log("IR dupa memoryOP este: "+ IR);
             break;
         case OP_MEM_ALL[2]://READ
-            MDR = Memorie[ADR];
+            MDR = (Memorie[ADR+1]<<8) | Memorie[ADR];
             break;
         case OP_MEM_ALL[3]://WRITE
-            Memorie[ADR] = MDR;
+            Memorie[ADR+1] = MDR >>8;
+            Memorie[ADR] = MDR & 0x00FF;
             break;
     }
 }
@@ -879,19 +893,18 @@ const setAlteOp = (AlteOp_codification) => {
             } else {
                 S = 0;
             }
-            if (((RBUS & 0x00010000) >> 16 == 1) && (RBUS & 0x0000FFFF) < 0x0000FFFF) {
+            if (((RBUS & 0x00010000) >> 16 == 1) && ((RBUS & 0x0000FFFF) < 0x0000FFFF)) {
                 C = 1;
             } else {
                 C = 0;
             }
-            if (((RBUS & 0xFFFF0000) >> 16 > 0) && (RBUS & 0x0000FFFF) == 0x0000FFFF) {
+            if (((RBUS & 0xFFFF0000) >> 16 > 0) && ((RBUS & 0x0000FFFF) == 0x0000FFFF)) {
                 V = 1;
             } else {
                 V = 0;
             }
             Flags = (C << 3) | (V << 2) | (Z << 1) | (S << 0);
             break;
-
         case ALTE_OP_All[8]:
             if (RBUS == 0) {
                 Z = 1;
@@ -924,30 +937,9 @@ const setAlteOp = (AlteOp_codification) => {
             break;
     }
 }
-const getIndex = () => {
-    let index = (MIR & 0x700) >> 8;
-    switch (index) {
-        case INDEX_All[0]:
-            return 0;
-        case INDEX_All[1]:
-            return ((Get_CL1(IR) << 1) | Get_CL0(IR));
-        case INDEX_All[2]:
-            return ((IR & 0xC00) >> 11);
-        case INDEX_All[3]:
-            return ((IR & 0x30) >> 4);
-        case INDEX_All[4]:
-            return ((IR & 0x7000) >> 12);
-        case INDEX_All[5]:
-            return ((IR & 0xF00) >> 8);
-        case INDEX_All[6]:
-            return (((IR & 0xF00) >> 8) << 1);
-    }
-}
-let hexString;
-let instructiunePartiala;
-let test;
 let Get_SUCCESSOR = (uInstrReg) => {
     let chooser = ((uInstrReg & 0x3800) >> 11);
+    chooser = chooser.toString(2).padStart(3,0);
     switch (chooser) {
         case SUCCESOR_All[0]:
             return 0;
@@ -956,6 +948,7 @@ let Get_SUCCESSOR = (uInstrReg) => {
         case SUCCESOR_All[2]:
             return ACLOW;
         case SUCCESOR_All[3]:
+            console.log("Get_nT_F: "+Get_nT_F(uInstrReg));
             return CIL;
         case SUCCESOR_All[4]:
             return ((Flags & 0x0008) >> 3);
@@ -967,11 +960,35 @@ let Get_SUCCESSOR = (uInstrReg) => {
             return ((Flags & 0x0004) >> 2);
     }
 }
-let getMicroAdrSalt = (uInstrReg) => {
-    return (uInstrReg & 0x7F);
+const getIndex = () => {
+    let index = (MIR & 0x700) >> 8;
+    index = index.toString(2).padStart(3,0);
+    console.log("Index_all: "+INDEX_All);
+    switch (index) {
+        case INDEX_All[0]:
+            return 0;
+        case INDEX_All[1]:
+            console.log("inside getIndex: "+((Get_CL1(IR) << 1) | Get_CL0(IR)));
+            return ((Get_CL1(IR) << 1) | Get_CL0(IR));
+        case INDEX_All[2]:
+            return ((IR & 0xC00) >> 10);
+        case INDEX_All[3]:
+            return ((IR & 0x30) >> 4);
+        case INDEX_All[4]:
+            return ((IR & 0x7000) >> 12);
+        case INDEX_All[5]:
+            return ((IR & 0xF00) >> 8);
+        case INDEX_All[6]:
+            return (((IR & 0xF00) >> 8) << 1);
+        case INDEX_All[7]:
+            return (INTR<<2);
+    }
 }
-const get_g = (MIR) => (Get_SUCCESSOR(MIR) ^ Get_nT_F(MIR))
-const Get_nT_F = (MIR) => ((MIR & 0x80) >> 7)
+let getMicroAdrSalt = (uInstrReg) => (uInstrReg & 0x7F);
+const get_g = (uInstrReg) => (Get_SUCCESSOR(uInstrReg) ^ Get_nT_F(uInstrReg));
+const Get_nT_F = (uInstrReg) => ((uInstrReg & 0x80) >> 7);
+
+//Reminder: Asta nuj daca ii ok
 const setTf = (Tf_codification) => {
     switch (Tf_codification) {
         case trueNegatpeFalse_All[0]:
@@ -984,35 +1001,43 @@ const setTf = (Tf_codification) => {
 }
 
 const secventiatorApel = () => {
-
+    console.log(Memorie);
     switch (stare) {
         case 0:
-            MIR = MPM[MAR]
-            hexString = MIR.toString(16);
-            instructiunePartiala = hexString.split("").slice(4).join("")
-            test = convertesteNumarul(instructiunePartiala, instructiunePartiala.length * 4)
+            MIR = MPM[MAR];
+            hexString = MIR.toString(16).padStart(9,0);
+            instructiunePartiala = hexString.split("").slice(4).join("");
+            test = convertesteNumarul(instructiunePartiala, instructiunePartiala.length * 4);
             stare = 1;
             altaVariabilaGlobala++;
+            console.error({hexString},{test});
             break;
         case 1:
-
-            console.error({hexString},{test})
-            g = get_g(MIR)
+            
+            g = get_g(MIR);
             if (g === 0)
-                MAR++;
+                {MAR++;}
             else {
-                uADR = getMicroAdrSalt(MIR)
+                uADR = getMicroAdrSalt(MIR);
                 Index = getIndex();
                 MAR = uADR + Index;
+                console.log("uADR: "+uADR);
+                console.log("Index: "+Index);
+                console.log("MAR: "+MAR);
             }
-            let SBUS_codification = convertesteNumarul(hexString[0], 4)
+            
+            let SBUS_codification = convertesteNumarul(hexString[0], 4);
             SBUS = setSbus(SBUS_codification);
-            let DBUS_codification = convertesteNumarul(hexString[1], 4)
+            console.log("Sbus after setSbus: "+SBUS);
+            let DBUS_codification = convertesteNumarul(hexString[1], 4);
             DBUS = setDbus(DBUS_codification);
-            let ALU_codification = convertesteNumarul(hexString[2], 4)
-            ALU = setAlu(ALU_codification);
-            let RBUS_codification = convertesteNumarul(hexString[3], 4)
-            RBUS = setRbus(RBUS_codification)
+            console.log("Dbus after setDbus: "+DBUS);
+            let ALU_codification = convertesteNumarul(hexString[2], 4);
+            RBUS = executeALU(ALU_codification);
+            console.log("Rbus after execALU: "+RBUS);
+            let RBUS_codification = convertesteNumarul(hexString[3], 4);
+            setRbus(RBUS_codification);
+            console.log("After setRbus: "+ADR);
             // todo: Sterge comment-ul de aici.
             let alteOp_codification = test.slice(2, 7);
             setAlteOp(alteOp_codification);
@@ -1026,7 +1051,7 @@ const secventiatorApel = () => {
         case 3:
             stare = 0;
             let operatiiMemorie_codification = test.slice(0, 2);
-            let OpMem = setOpMem(operatiiMemorie_codification);
+            setOpMem(operatiiMemorie_codification);
             altaVariabilaGlobala++
             break;
     }
@@ -1041,11 +1066,12 @@ const secventiatorInfinit = () => {
 }
 const secventiatorPasCuPas = () => {
     altaVariabilaGlobala = 0;
-    while (altaVariabilaGlobala % 4 !== 0 || altaVariabilaGlobala === 0) {
+    //while (altaVariabilaGlobala % 4 !== 0 || altaVariabilaGlobala === 0) {
         console.log({altaVariabilaGlobala})
         console.log("Salut")
         secventiatorApel();
-    }
+        console.log(RG);
+    //}
 }
 
 
