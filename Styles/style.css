@@ -1,0 +1,20 @@
+#textbox {
+    width: 300px;
+    height: 150px
+}
+
+#root {
+    width: 800px;
+}
+
+.registers {
+
+}
+
+.registers input {
+    width: 50px;
+}
+.instructions {
+    border: 5px brown solid;
+
+}
