@@ -4,13 +4,15 @@
 }
 
 #root {
-    width: 800px;
+    /*width: 800px;*/
 }
 
 .registers {
 
 }
-
+.styling-left{
+margin-left: 10px;
+}
 .registers input {
     width: 50px;
 }

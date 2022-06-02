@@ -401,19 +401,20 @@ const citesteFisier = (e) => {
             let partial = [];
             let boolean = decizieOrdine === ordineaOctetilor.littleEndian
             partial = boolean ? [secventa3_4, secventa1_2] : [secventa1_2, secventa3_4];
-            // Memorie.push(partial);
+            console.info(partial)
+            Memorie.push(partial[0],partial[1]);
 
             if (valoareRegistru !== undefined) {
                 let valoareRegistruInBinar = convertesteNumarul(valoareRegistru, 4, 2, 16);
                 const secventa5_6 = valoareRegistruInBinar.slice(0, 2);
                 const secventa7_8 = valoareRegistruInBinar.slice(2);
                 boolean ? partial.push(secventa7_8, secventa5_6) : partial.push(secventa5_6, secventa7_8);
+                Memorie.push(partial[2],partial[3]);
 
                 if (afiseazaInstructiunile === true) {
                     adaugaLaElementulCurent(hexa, valoareRegistruInBinar)
                 }
             }
-            Memorie.push(partial);
             theStiva.push(partial.join(" "));
         }
         console.error(Memorie);
@@ -544,14 +545,14 @@ let microInstructiuni = [
     ],
     //SUCCESOR
     [
-        "0000",
-        "0001",
-        "0010",
-        "0011",
-        "0100",
-        "0101",
-        "0110",
-        "0111",
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
     ],
     //INDEX
     [
@@ -572,7 +573,7 @@ let microInstructiuni = [
 ]
 let [SBUS_All, DBUS_All, ALU_All, RBUS_All, OP_MEM_ALL, ALTE_OP_All, SUCCESOR_All, INDEX_All, trueNegatpeFalse_All] = microInstructiuni
 OP_MEM_ALL = OP_MEM_ALL.map(item => item.split("").slice(2).join(""))
-SUCCESOR_All = SUCCESOR_All.map(item => item.split("").slice(1).join(""))
+// SUCCESOR_All = SUCCESOR_All.map(item => item.split("").slice(1).join(""))
 // INDEX_All = INDEX_All.map(item => item.split("").slice(1).join(""))
 trueNegatpeFalse_All = trueNegatpeFalse_All.map(item => item.split("").slice(3).join(""))
 let microInBinar = [];
@@ -948,6 +949,7 @@ let instructiunePartiala;
 let test;
 let Get_SUCCESSOR = (uInstrReg) => {
     let chooser = ((uInstrReg & 0x3800) >> 11);
+    console.error(chooser)
     switch (chooser) {
         case SUCCESOR_All[0]:
             return 0;
@@ -970,8 +972,13 @@ let Get_SUCCESSOR = (uInstrReg) => {
 let getMicroAdrSalt = (uInstrReg) => {
     return (uInstrReg & 0x7F);
 }
+
 const get_g = (MIR) => (Get_SUCCESSOR(MIR) ^ Get_nT_F(MIR))
-const Get_nT_F = (MIR) => ((MIR & 0x80) >> 7)
+const Get_nT_F = (MIR) => {
+    let number = (MIR & 0x80) >> 7;
+    console.error({number});
+    return number;
+}
 const setTf = (Tf_codification) => {
     switch (Tf_codification) {
         case trueNegatpeFalse_All[0]:
@@ -989,15 +996,22 @@ const secventiatorApel = () => {
         case 0:
             MIR = MPM[MAR]
             hexString = MIR.toString(16);
+            let lungimeaStringuluiInHexa = hexString.length;
+            if (lungimeaStringuluiInHexa < 9) {
+                let lungimeDiferenta = 9 - lungimeaStringuluiInHexa;
+                hexString = hexString.split("");
+                let hexStringTemporary = new Array(lungimeDiferenta).fill("0");
+                hexString.unshift(hexStringTemporary.join(""));
+                hexString = hexString.join("");
+            }
             instructiunePartiala = hexString.split("").slice(4).join("")
             test = convertesteNumarul(instructiunePartiala, instructiunePartiala.length * 4)
             stare = 1;
             altaVariabilaGlobala++;
             break;
         case 1:
-
-            console.error({hexString},{test})
             g = get_g(MIR)
+            console.error({g})
             if (g === 0)
                 MAR++;
             else {

@@ -37,23 +37,28 @@
             <button class="btn btn-success" id="totul">Totul</button>
             <button class="btn btn-success" id="pascupas">PascuPas</button>
         </div>
-        <div class="d-flex flex-row  registers  align-items-center justify-content-around">
-            <div><label for="R0">R0:</label><input id="R0" name="R0" type="text" disabled></div>
-            <div><label for="R1">R1:</label><input id="R1" name="R1" type="text" disabled></div>
-            <div><label for="R2">R2:</label><input id="R2" name="R2" type="text" disabled></div>
-            <div><label for="R3">R3:</label><input id="R3" name="R3" type="text" disabled></div>
-            <div><label for="R4">R4:</label><input id="R4" name="R4" type="text" disabled></div>
-            <div><label for="R5">R5:</label><input id="R5" name="R5" type="text" disabled></div>
-            <div><label for="R6">R6:</label><input id="R6" name="R6" type="text" disabled></div>
-            <div><label for="R7">R7:</label><input id="R7" name="R7" type="text" disabled></div>
-            <div><label for="R8">R8:</label><input id="R8" name="R8" type="text" disabled></div>
-            <div><label for="R9">R9:</label><input id="R9" name="R9" type="text" disabled></div>
-            <div><label for="R10">R10:</label><input id="R10" name="R10" type="text" disabled></div>
-            <div><label for="R11">R11:</label><input id="R11" name="R11" type="text" disabled></div>
-            <div><label for="R12">R12:</label><input id="R12" name="R12" type="text" disabled></div>
-            <div><label for="R13">R13:</label><input id="R13" name="R13" type="text" disabled></div>
-            <div><label for="R14">R14:</label><input id="R14" name="R14" type="text" disabled></div>
-            <div><label for="R15">R15:</label><input id="R15" name="R15" type="text" disabled></div>
+        <div class="d-flex row flex-wrap registers  align-items-center justify-content-around">
+            <div class="col-12 d-flex justify-content-center align-content-center">
+                <div class="styling-left"><label for="R0">R0:</label><input id="R0" name="R0" type="text" disabled></div>
+                <div class="styling-left"><label for="R1">R1:</label><input id="R1" name="R1" type="text" disabled></div>
+                <div class="styling-left"><label for="R2">R2:</label><input id="R2" name="R2" type="text" disabled></div>
+                <div class="styling-left"><label for="R3">R3:</label><input id="R3" name="R3" type="text" disabled></div>
+                <div class="styling-left"><label for="R4">R4:</label><input id="R4" name="R4" type="text" disabled></div>
+                <div class="styling-left"><label for="R5">R5:</label><input id="R5" name="R5" type="text" disabled></div>
+                <div class="styling-left"><label for="R6">R6:</label><input id="R6" name="R6" type="text" disabled></div>
+                <div class="styling-left"><label for="R7">R7:</label><input id="R7" name="R7" type="text" disabled></div>
+                <div class="styling-left"><label for="R8">R8:</label><input id="R8" name="R8" type="text" disabled></div>
+            </div>
+            <div class="col-12  d-flex justify-content-center align-content-center">
+                <div class="styling-left"><label for="R9">R9:</label><input id="R9" name="R9" type="text" disabled></div>
+                <div class="styling-left"><label for="R10">R10:</label><input id="R10" name="R10" type="text" disabled></div>
+                <div class="styling-left"><label for="R11">R11:</label><input id="R11" name="R11" type="text" disabled></div>
+                <div class="styling-left"><label for="R12">R12:</label><input id="R12" name="R12" type="text" disabled></div>
+                <div class="styling-left"><label for="R13">R13:</label><input id="R13" name="R13" type="text" disabled></div>
+                <div class="styling-left"><label for="R14">R14:</label><input id="R14" name="R14" type="text" disabled></div>
+                <div class="styling-left"><label for="R15">R15:</label><input id="R15" name="R15" type="text" disabled></div>
+            </div>
+
         </div>
     </div>
 
