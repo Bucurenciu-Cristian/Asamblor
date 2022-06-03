@@ -189,6 +189,19 @@ const adaugaLaElementulCurent = (element, continut) => {
     element.innerHTML += continut;
 }
 const afiseazaInstructiunile = true;
+let Memorie = [];
+// let Memorie = [];
+let MemorieDemo = [];
+String.prototype.unshift = function(el) {
+    let arr = [this];
+    arr.unshift(el);
+    return arr.join("");
+}
+
+// var s = "BCD";
+// s = s.unshift("A");
+
+// console.log(s); // ABCD
 const citesteFisier = (e) => {
     const reader = new FileReader();
     reader.readAsText(input.files[0]);
@@ -285,13 +298,15 @@ const citesteFisier = (e) => {
             let partial = [];
             let boolean = decizieOrdine === ordineaOctetilor.littleEndian
             partial = boolean ? [secventa3_4, secventa1_2] : [secventa1_2, secventa3_4];
-            // Memorie.push(partial);
+            Memorie.push(partial[0].unshift("0x"), partial[1].unshift("0x"));
+
 
             if (valoareRegistru !== undefined) {
                 let valoareRegistruInBinar = convertesteNumarul(valoareRegistru, 4, 2, 16);
                 const secventa5_6 = valoareRegistruInBinar.slice(0, 2);
                 const secventa7_8 = valoareRegistruInBinar.slice(2);
                 boolean ? partial.push(secventa7_8, secventa5_6) : partial.push(secventa5_6, secventa7_8);
+                Memorie.push(partial[2].unshift("0x"), partial[3].unshift("0x"));
 
                 if (afiseazaInstructiunile === true) {
                     adaugaLaElementulCurent(hexa, valoareRegistruInBinar)
@@ -300,7 +315,10 @@ const citesteFisier = (e) => {
             //Reminder: Memorie.push(partial);
             theStiva.push(partial.join(" "));
         }
-        //Reminder: console.error(Memorie);
+        console.error(Memorie);
+        Memorie = Memorie.map(item => Number(item));
+        console.error(Memorie);
+
         theStiva = theStiva.join(" ");
         textbox.value = theStiva;
     };
@@ -468,7 +486,6 @@ const RG = new Array(16).fill(0);
 const getRG = (input) => {
     return RG[input - 1];
 }
-let Memorie = [0x02,0x04,0x05,0x00,0x81,0x00,0x01,0x14,0x07,0x00,0x81,0x10,0x0d,0xc0];
 
 //Registre pentru program principal
 //Memoriea principala declarata mai sus(cea rezultata din fisierul de intrare .asm)
