@@ -37,6 +37,8 @@
             <button class="btn btn-success" id="totul">Totul</button>
             <button class="btn btn-success" id="pascupas">PascuPas</button>
         </div>
+        <div><h2>Registre generale</h2></div>
+
         <div class="d-flex flex-row  registers  align-items-center justify-content-around">
             <div><label for="R0">R0:</label><input id="R0" name="R0" type="text" disabled></div>
             <div><label for="R1">R1:</label><input id="R1" name="R1" type="text" disabled></div>
@@ -55,12 +57,29 @@
             <div><label for="R14">R14:</label><input id="R14" name="R14" type="text" disabled></div>
             <div><label for="R15">R15:</label><input id="R15" name="R15" type="text" disabled></div>
         </div>
+        <br>
+        <div><h2>Registre pentru program principal</h2></div>
+        <div class="registreNormale d-flex flex-row  registers  align-items-center justify-content-around">
+            <div><label for="IR">IR:</label><input id="IR" name="IR" type="text" disabled></div>
+            <div><label for="T">T:</label><input id="T" name="T" type="text" disabled></div>
+            <div><label for="SP">SP:</label><input id="SP" name="SP" type="text" disabled></div>
+            <div><label for="MDR">MDR:</label><input id="MDR" name="MDR" type="text" disabled></div>
+            <div><label for="ADR">ADR:</label><input id="ADR" name="ADR" type="text" disabled></div>
+            <div><label for="IVR">IVR:</label><input id="IVR" name="IVR" type="text" disabled></div>
+        </div>
+        <div><h2>Magistrale</h2></div>
+        <div class="magistrale d-flex flex-row  registers  align-items-center justify-content-around">
+            <div><label for="SBUS">SBUS:</label><input id="SBUS" name="SBUS" type="text" disabled></div>
+            <div><label for="DBUS">DBUS:</label><input id="DBUS" name="DBUS" type="text" disabled></div>
+            <div><label for="RBUS">RBUS:</label><input id="RBUS" name="RBUS" type="text" disabled></div>
+            <div><label for="ALU">ALU:</label><input id="ALU" name="ALU" type="text" disabled></div>
+        </div>
+
+        <div class="d-flex justify-content-around flex-column m-3">
+            <label for="interrupt">Interrupt</label><input type="checkbox" id="interrupt" name="interrupt" value="1">
+            <label for="aclow">ACLOW</label><input type="checkbox" id="aclow" name="aclow" value="1">
+        </div>
     </div>
-    <div class="d-flex justify-content-around flex-column m-3">
-    <label for="interrupt">Interrupt</label><input type="checkbox" id="interrupt" name="interrupt" value="1">
-    <label for="aclow">ACLOW</label><input type="checkbox" id="aclow" name="aclow" value="1">
-    </div>
-</div>
-<script src="index.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>
