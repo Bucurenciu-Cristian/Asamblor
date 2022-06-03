@@ -61,6 +61,7 @@
         <div><h2>Registre pentru program principal</h2></div>
         <div class="registreNormale d-flex flex-row  registers  align-items-center justify-content-around">
             <div><label for="IR">IR:</label><input id="IR" name="IR" type="text" disabled></div>
+            <div><label for="PC">PC:</label><input id="PC" name="PC" type="text" disabled></div>
             <div><label for="T">T:</label><input id="T" name="T" type="text" disabled></div>
             <div><label for="SP">SP:</label><input id="SP" name="SP" type="text" disabled></div>
             <div><label for="MDR">MDR:</label><input id="MDR" name="MDR" type="text" disabled></div>

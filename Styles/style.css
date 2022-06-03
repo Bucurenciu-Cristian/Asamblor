@@ -5,6 +5,7 @@
 
 #root {
     width: 800px;
+    margin: 0 auto;
 }
 
 .registers {
@@ -17,4 +18,9 @@
 .instructions {
     border: 5px brown solid;
 
+}
+
+input[type=text]{
+    width: 75px;
+    text-align: center;
 }
