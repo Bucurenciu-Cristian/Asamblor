@@ -56,7 +56,10 @@
             <div><label for="R15">R15:</label><input id="R15" name="R15" type="text" disabled></div>
         </div>
     </div>
-
+    <div class="d-flex justify-content-around flex-column m-3">
+    <label for="interrupt">Interrupt</label><input type="checkbox" id="interrupt" name="interrupt" value="1">
+    <label for="aclow">ACLOW</label><input type="checkbox" id="aclow" name="aclow" value="1">
+    </div>
 </div>
 <script src="index.js"></script>
 </body>
