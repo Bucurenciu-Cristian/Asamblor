@@ -1120,18 +1120,18 @@ function displayGeneralRegisters(){
 }
 
 function updateDisplayOfRegisters(){
-    document.getElementById("IR").value = IR;
-    document.getElementById("PC").value = PC;
-    document.getElementById("T").value = T;
-    document.getElementById("SP").value = SP;
-    document.getElementById("MDR").value = MDR;
-    document.getElementById("ADR").value = ADR;
-    document.getElementById("IVR").value = IVR;
+    document.getElementById("IR").value = IR.toString(16);
+    document.getElementById("PC").value = PC.toString(16);
+    document.getElementById("T").value = T.toString(16);
+    document.getElementById("SP").value = SP.toString(16);
+    document.getElementById("MDR").value = MDR.toString(16);
+    document.getElementById("ADR").value = ADR.toString(16);
+    document.getElementById("IVR").value = IVR.toString(16);
 }
 
 function updateMagistralaRegister(){
-    document.getElementById("SBUS").value = SBUS;
-    document.getElementById("DBUS").value = DBUS;
-    document.getElementById("RBUS").value = RBUS;
-    document.getElementById("ALU").value = ALU;
+    document.getElementById("SBUS").value = SBUS.toString(16);
+    document.getElementById("DBUS").value = DBUS.toString(16);
+    document.getElementById("RBUS").value = RBUS.toString(16);
+    document.getElementById("ALU").value = ALU.toString(16);
 }
