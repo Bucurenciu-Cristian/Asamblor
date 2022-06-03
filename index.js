@@ -468,7 +468,7 @@ const RG = new Array(16).fill(0);
 const getRG = (input) => {
     return RG[input - 1];
 }
-let Memorie = [0x02,0x04,0x05,0x00,0x81,0x00,0x0d,0xc0];
+let Memorie = [0x02,0x04,0x05,0x00,0x81,0x00,0x01,0x14,0x07,0x00,0x81,0x10,0x0d,0xc0];
 
 //Registre pentru program principal
 //Memoriea principala declarata mai sus(cea rezultata din fisierul de intrare .asm)
@@ -683,7 +683,7 @@ const setDbus = (DBUS_codification) => {
             return Flags;
         case DBUS_All[2]:
             //todo: Arata la prof magia :)
-            return RG[(IR & 0x3c0) >> 6];
+            return RG[(IR & 0x000F)];
         case DBUS_All[3]:
             return SP;
         case DBUS_All[4]:
@@ -925,7 +925,6 @@ const setAlteOp = (AlteOp_codification) => {
             BVI = 0;
             break;
         case ALTE_OP_All[11]:
-            console.log("███████████████████████████████████████████");
             BP0 = 0;
             break;
         case ALTE_OP_All[12]:
@@ -1052,7 +1051,6 @@ const secventiatorApel = () => {
             }
             if(document.getElementById('aclow').checked){
                 ACLOW = 1;
-                document.getElementById('aclow').checked = false;
             }
             altaVariabilaGlobala++
             break;
@@ -1061,20 +1059,33 @@ const secventiatorApel = () => {
 }
 
 const secventiatorInfinit = () => {
-    while(BP0 == 1){
+    while(BP0 === 1 && ACLOW === 0){
         secventiatorApel();
+        if(INTR === 1){
+            window.alert("O aparut o intrerupere.");
+            INTR = 0;
+        }
     }
-    window.alert("Am ajuns la sfarsitul executiei programului.");
+    if(BP0 === 0)
+        window.alert("Am ajuns la sfarsitul executiei programului.");
+    if(ACLOW === 1)
+        window.alert("O picat curentul.")
 }
 const secventiatorPasCuPas = () => {
     altaVariabilaGlobala = 0;
-    if(BP0 == 1){
+    if(BP0 === 1 && ACLOW === 0){
         while (altaVariabilaGlobala % 4 !== 0 || altaVariabilaGlobala === 0) {
-            console.log({altaVariabilaGlobala})
             secventiatorApel(); 
+            if(INTR === 1){
+                window.alert("O aparut o intrerupere.");
+                INTR = 0;
+            }
         }
     }else{
-        window.alert("Am ajuns la sfarsitul executiei programului.");
+        if(BP0 === 0)
+            window.alert("Am ajuns la sfarsitul executiei programului.");
+        if(ACLOW === 1)
+            window.alert("O picat curentul.")
     }
 }
 
