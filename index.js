@@ -468,7 +468,7 @@ const RG = new Array(16).fill(0);
 const getRG = (input) => {
     return RG[input - 1];
 }
-let Memorie = [0x02,0x04,0x05,0x00,0x81,0x00];
+let Memorie = [0x02,0x04,0x05,0x00,0x81,0x00,0x0d,0xc0];
 
 //Registre pentru program principal
 //Memoriea principala declarata mai sus(cea rezultata din fisierul de intrare .asm)
@@ -484,124 +484,124 @@ let IVR = 0;
 //Registre necesare pentru uProgram
 let MIR = 0;
 let MAR = 0;
-let MPM = [0x60184D003,
-    0x00000198A,//Reminder: 190A
-    0x000014804,
-    0x000010804,
-    0x301830000,
-    0x1019C8000,
-    0x301800000,
-    0x6019C0000,
-    0x701980000,
-    0x901634800,
-    0x000000A0E,
-    0x000000B19,
-    0x000000E38,
-    0x000000E5A,
-    0x201500B14,
-    0x60188C813,//0x60188C000
-    0x201880813,
-    0x60188C000,
-    0x283880000,
-    0x901500B14,
-    0x022900C1E,
-    0x000000802,
-    0x022880C1E,
-    0x05288C000,
-    0x923880C1E,
-    0x022900D25,
-    0x000000802,
-    0x022880C1E,
-    0x05288C000,
-    0x923880D25,
-    0x401000B34,//0x401900B34,
-    0x483918B34,
-    0x58391CB34,
-    0x58301CF00,
-    0x485920B34,
-    0x486900B34,
-    0x487920B34,
-    0x0B2920B34,
-    0x092920B34,
-    0xB8391CB34,
-    0xC85918B34,
-    0x088918B34,
-    0x089918B34,
-    0x08A920B34,
-    0x09B920B34,
-    0x08C920B34,
-    0x08D920B34,
-    0x08E920B34,
-    0x3018C8F00,
-    0x801500000,
-    0x301880000,
-    0x401804B34,
-    0x901300F00,
-    0x000000802,
-    0x0000C0F00,
-    0x0000C0F00,
-    0x000002B54,
-    0x000000F00,
-    0x000002BD4,
-    0x000000F00,
-    0x000003354,
-    0x000000F00,
-    0x0000033D4,
-    0x000000F00,
-    0x000002354,
-    0x000000F00,
-    0x000002354,
-    0x000000F00,
-    0x000003B54,
-    0x000000F00,
-    0x000003BD4,
-    0x000000F00,
-    0x000000B54,
-    0x000000000,
-    0x000000B4B,
-    0x000000802,
-    0x60188C850,
-    0x022500851,
-    0x60188C000,
-    0x923500851,
-    0x953500000,
-    0x301808000,
-    0x6019C0000,
-    0x401600F00,
-    0x000000802,
-    0x60188C859,
-    0x022600F00,
-    0x60188C000,
-    0x923600F00,
-    0x953600F00,
-    0x1A5100F00,
-    0x000000000,
-    0x1A6100F00,
-    0x000000000,
-    0x000000F00,
-    0x000000000,
-    0x00002C000,
-    0x000000000,
-    0x000024F00,
-    0x000000000,
-    0x000028800,
-    0x000000000,
-    0x301808000,
-    0x6019C0F00,
-    0x301880000,
-    0x901604F00,
-    0x301808000,
-    0x1019C0F00,
-    0x301880000,
-    0x901104F00,
-    0x301880000,
-    0x901604F00,
-    0x301880000,
-    0x901604000,
-    0x301880000,
-    0x901104F00,
+let MPM = [
+    0x60184D003,        //0
+    0x00000198A,        //1
+    0x000014804,        //2
+    0x000010804,        //3
+    0x301830000,        //4        
+    0x1019C8000,        //5
+    0x301800000,        //6
+    0x6019C0000,        //7
+    0x701880000,        //8
+    0x901634800,        //9
+    0x000000A0E,        //A
+    0x000000B19,        //B
+    0x000000E38,        //C
+    0x000000E5A,        //D
+    0x201500B14,        //E
+    0x60188C813,        //F
+    0x201880813,        //10
+    0x60188C000,        //11
+    0x283880000,        //12
+    0x901500B14,        //13
+    0x022900C1E,        //14
+    0x000000802,        //15
+    0x022880C1E,        //16
+    0x05288C000,        //17
+    0x923880C1E,        //18
+    0x022900D25,        //19
+    0x000000802,        //1A
+    0x022880C1E,        //1B
+    0x05288C000,        //1C
+    0x823880D25,        //1D
+    0x401900B34,        //1E
+    0x483918B34,        //1F
+    0x58391CB34,        //20
+    0x58301CF00,        //21
+    0x485920B34,        //22
+    0x486920B34,        //23
+    0x487920B34,        //24
+    0x0B2920B34,        //25
+    0x092920B34,        //26
+    0xB8391CB34,        //27
+    0xC83918B34,        //28
+    0x088918B34,        //29
+    0x089918B34,        //2A
+    0x08A920B34,        //2B
+    0x08B920B34,        //2C
+    0x08C920B34,        //2D
+    0x08D920B34,        //2E
+    0x08E920B34,        //2F
+    0x3018C8F00,        //30
+    0x801500000,        //31
+    0x301880000,        //32
+    0x401804B34,        //33
+    0x901300F00,        //34
+    0x000000802,        //35
+    0x0000C0F00,        //36
+    0x0000C0F00,        //37
+    0x000002B54,        //38
+    0x000000F00,        //39
+    0x000002BD4,        //3A
+    0x000000F00,        //3B
+    0x000003354,        //3C
+    0x000000F00,        //3D
+    0x0000033D4,        //3E
+    0x000000F00,        //3F
+    0x000002354,        //40
+    0x000000F00,        //41
+    0x0000023D4,        //42
+    0x000000F00,        //43
+    0x000003B54,        //44
+    0x000000F00,        //45
+    0x000003BD4,        //46
+    0x000000F00,        //47
+    0x000000B54,        //48
+    0x000000000,        //49
+    0x000000B4B,        //4A
+    0x000000802,        //4B
+    0x60188C850,        //4C
+    0x022500851,        //4D
+    0x60188C000,        //4E
+    0x923500851,        //4F
+    0x953500000,        //50
+    0x301808000,        //51
+    0x6019C0000,        //52
+    0x401600F00,        //53
+    0x000000802,        //54
+    0x60188C859,        //55
+    0x022600F00,        //56
+    0x60188C000,        //57
+    0x923600F00,        //58
+    0x953600F00,        //59
+    0x1A5100F00,        //5A
+    0x000000000,        //5B
+    0x1A6100F00,        //5C
+    0x000000000,        //5D
+    0x000000F00,        //5E
+    0x000000000,        //5F
+    0x00002C000,        //60
+    0x000000000,        //61
+    0x000024F00,        //62
+    0x000000000,        //63
+    0x000028800,        //64
+    0x000000000,        //65
+    0x301808000,        //66
+    0x6019C0F00,        //67
+    0x301880000,        //68
+    0x901604F00,        //69
+    0x301808000,        //6A
+    0x1019C0F00,        //6B
+    0x301880000,        //6C
+    0x901104F00,        //6D
+    0x301880000,        //6E
+    0x901604F00,        //6F
+    0x301880000,        //70
+    0x901604000,        //71
+    0x301880000,        //72
+    0x901104F00,        //73
 ]
-let MIRDemo = 0x60184D003;
 
 //Stari
 let C = 0;
@@ -613,12 +613,12 @@ let uADR = 0;
 let Index = 0;
 let INTR = 0;
 let INTA = 0;
-let BVI = 0;
+let BVI = 1;
 let BI = 0;
 let BE = 0;
 let BE0 = 0;
 let BE1 = 0;
-let BP0 = 0;
+let BP0 = 1;
 let ACLOW = 0;
 let CIL = 0;
 let Flags = 0;
@@ -847,8 +847,10 @@ const setOpMem = (OpMem_codification) => {
         case OP_MEM_ALL[0]:
             return 0;
         case OP_MEM_ALL[1]://IFCH
-            IR = (Memorie[ADR+1]<<8) | Memorie[ADR];//Reminder trebuie sa luam si ADR + 1 (cum?)
-            console.log("IR dupa memoryOP este: "+ IR);
+            IR = (Memorie[ADR+1]<<8) | Memorie[ADR];
+            console.log("PC este: "+PC);
+            console.log("ADR este: "+ADR);
+            console.log("Instr Reg este: "+IR);
             break;
         case OP_MEM_ALL[2]://READ
             MDR = (Memorie[ADR+1]<<8) | Memorie[ADR];
@@ -860,6 +862,7 @@ const setOpMem = (OpMem_codification) => {
     }
 }
 const setAlteOp = (AlteOp_codification) => {
+    console.log("AlteOp_codification"+AlteOp_codification);
     switch (AlteOp_codification) {
         case ALTE_OP_All[0]:
             return 0;
@@ -925,6 +928,7 @@ const setAlteOp = (AlteOp_codification) => {
             BVI = 0;
             break;
         case ALTE_OP_All[11]:
+            console.log("███████████████████████████████████████████");
             BP0 = 0;
             break;
         case ALTE_OP_All[12]:
@@ -948,7 +952,6 @@ let Get_SUCCESSOR = (uInstrReg) => {
         case SUCCESOR_All[2]:
             return ACLOW;
         case SUCCESOR_All[3]:
-            console.log("Get_nT_F: "+Get_nT_F(uInstrReg));
             return CIL;
         case SUCCESOR_All[4]:
             return ((Flags & 0x0008) >> 3);
@@ -963,12 +966,10 @@ let Get_SUCCESSOR = (uInstrReg) => {
 const getIndex = () => {
     let index = (MIR & 0x700) >> 8;
     index = index.toString(2).padStart(3,0);
-    console.log("Index_all: "+INDEX_All);
     switch (index) {
         case INDEX_All[0]:
             return 0;
         case INDEX_All[1]:
-            console.log("inside getIndex: "+((Get_CL1(IR) << 1) | Get_CL0(IR)));
             return ((Get_CL1(IR) << 1) | Get_CL0(IR));
         case INDEX_All[2]:
             return ((IR & 0xC00) >> 10);
@@ -1001,13 +1002,13 @@ const setTf = (Tf_codification) => {
 }
 
 const secventiatorApel = () => {
-    console.log(Memorie);
     switch (stare) {
         case 0:
             MIR = MPM[MAR];
             hexString = MIR.toString(16).padStart(9,0);
             instructiunePartiala = hexString.split("").slice(4).join("");
             test = convertesteNumarul(instructiunePartiala, instructiunePartiala.length * 4);
+            console.log(instructiunePartiala+"\n"+test);
             stare = 1;
             altaVariabilaGlobala++;
             console.error({hexString},{test});
@@ -1021,25 +1022,18 @@ const secventiatorApel = () => {
                 uADR = getMicroAdrSalt(MIR);
                 Index = getIndex();
                 MAR = uADR + Index;
-                console.log("uADR: "+uADR);
-                console.log("Index: "+Index);
-                console.log("MAR: "+MAR);
             }
             
             let SBUS_codification = convertesteNumarul(hexString[0], 4);
             SBUS = setSbus(SBUS_codification);
-            console.log("Sbus after setSbus: "+SBUS);
             let DBUS_codification = convertesteNumarul(hexString[1], 4);
             DBUS = setDbus(DBUS_codification);
-            console.log("Dbus after setDbus: "+DBUS);
             let ALU_codification = convertesteNumarul(hexString[2], 4);
             RBUS = executeALU(ALU_codification);
-            console.log("Rbus after execALU: "+RBUS);
             let RBUS_codification = convertesteNumarul(hexString[3], 4);
             setRbus(RBUS_codification);
-            console.log("After setRbus: "+ADR);
             // todo: Sterge comment-ul de aici.
-            let alteOp_codification = test.slice(2, 7);
+            let alteOp_codification = test.slice(2, 6);
             setAlteOp(alteOp_codification);
             altaVariabilaGlobala++;
             stare = 2;
@@ -1055,25 +1049,38 @@ const secventiatorApel = () => {
             altaVariabilaGlobala++
             break;
     }
+    displayGeneralRegisters();
 }
 
-
+const maxProc = 300;
+let abc = 0;
 const secventiatorInfinit = () => {
-    while (altaVariabilaGlobala % 4 !== 0 && stare !== 0) {
+    while(BP0 != 0 && abc<maxProc){
+        console.log(BP0);
+        //while (altaVariabilaGlobala % 4 !== 0 && stare !== 0) {
         secventiatorApel();
+        //}
+        abc+=1;
     }
-
 }
 const secventiatorPasCuPas = () => {
-    altaVariabilaGlobala = 0;
-    //while (altaVariabilaGlobala % 4 !== 0 || altaVariabilaGlobala === 0) {
-        console.log({altaVariabilaGlobala})
-        console.log("Salut")
-        secventiatorApel();
-        console.log(RG);
-    //}
+    if(BP0 != 0){
+        altaVariabilaGlobala = 0;
+        while (altaVariabilaGlobala % 4 !== 0 || altaVariabilaGlobala === 0) {
+            console.log({altaVariabilaGlobala})
+            secventiatorApel();
+        }
+    }else{
+        window.alert("S-a executat HALT!");
+    }
 }
 
 
 totul.addEventListener('click', secventiatorInfinit, false);
 pascupas.addEventListener('click', secventiatorPasCuPas, false);
+
+function displayGeneralRegisters(){
+    for(let i = 0; i < 16; i++){
+        document.getElementById("R"+i).value = RG[i];
+    }
+}
