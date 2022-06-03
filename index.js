@@ -475,7 +475,7 @@ let Memorie = [0x02,0x04,0x05,0x00,0x81,0x00,0x01,0x14,0x07,0x00,0x81,0x10,0x0d,
 let IR = 0;
 let PC = 0;
 let T = 0;
-let SP = 3500;
+let SP = 0;
 let MDR = 0;
 let ADR = 0;
 let IVR = 0;
@@ -1033,8 +1033,6 @@ const secventiatorApel = () => {
             setAlteOp(alteOp_codification);
             altaVariabilaGlobala++;
             stare = 2;
-            updateMagistralaRegister();
-            updateDisplayOfRegisters();
             break;
         case 2:
             stare = 3;
@@ -1044,7 +1042,6 @@ const secventiatorApel = () => {
             stare = 0;
             let operatiiMemorie_codification = test.slice(0, 2);
             setOpMem(operatiiMemorie_codification);
-            updateDisplayOfRegisters();
             if(IR === 0xC00D){
                 BP0 = 0;
             }
@@ -1100,21 +1097,4 @@ function displayGeneralRegisters(){
     for(let i = 0; i < 16; i++){
         document.getElementById("R"+i).value = RG[i];
     }
-}
-
-function updateDisplayOfRegisters(){
-    document.getElementById("IR").value = IR;
-    document.getElementById("PC").value = PC;
-    document.getElementById("T").value = T;
-    document.getElementById("SP").value = SP;
-    document.getElementById("MDR").value = MDR;
-    document.getElementById("ADR").value = ADR;
-    document.getElementById("IVR").value = IVR;
-}
-
-function updateMagistralaRegister(){
-    document.getElementById("SBUS").value = SBUS;
-    document.getElementById("DBUS").value = DBUS;
-    document.getElementById("RBUS").value = RBUS;
-    document.getElementById("ALU").value = ALU;
 }
