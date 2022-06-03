@@ -849,9 +849,6 @@ const setOpMem = (OpMem_codification) => {
             return 0;
         case OP_MEM_ALL[1]://IFCH
             IR = (Memorie[ADR+1]<<8) | Memorie[ADR];
-            console.log("PC este: "+PC);
-            console.log("ADR este: "+ADR);
-            console.log("Instr Reg este: "+IR);
             break;
         case OP_MEM_ALL[2]://READ
             MDR = (Memorie[ADR+1]<<8) | Memorie[ADR];
@@ -1047,32 +1044,38 @@ const secventiatorApel = () => {
             stare = 0;
             let operatiiMemorie_codification = test.slice(0, 2);
             setOpMem(operatiiMemorie_codification);
+            if(IR === 0xC00D){
+                BP0 = 0;
+            }
+            if(document.getElementById('interrupt').checked){
+                INTR = 1;
+                document.getElementById('interrupt').checked = false;
+            }
+            if(document.getElementById('aclow').checked){
+                ACLOW = 1;
+                document.getElementById('aclow').checked = false;
+            }
             altaVariabilaGlobala++
             break;
     }
     displayGeneralRegisters();
 }
 
-const maxProc = 300;
-let abc = 0;
 const secventiatorInfinit = () => {
-    while(BP0 != 0 && abc<maxProc){
-        console.log(BP0);
-        //while (altaVariabilaGlobala % 4 !== 0 && stare !== 0) {
+    while(BP0 == 1){
         secventiatorApel();
-        //}
-        abc+=1;
     }
+    window.alert("Am ajuns la sfarsitul executiei programului.");
 }
 const secventiatorPasCuPas = () => {
-    if(BP0 != 0){
-        altaVariabilaGlobala = 0;
+    altaVariabilaGlobala = 0;
+    if(BP0 == 1){
         while (altaVariabilaGlobala % 4 !== 0 || altaVariabilaGlobala === 0) {
             console.log({altaVariabilaGlobala})
-            secventiatorApel();
+            secventiatorApel(); 
         }
     }else{
-        window.alert("S-a executat HALT!");
+        window.alert("Am ajuns la sfarsitul executiei programului.");
     }
 }
 
